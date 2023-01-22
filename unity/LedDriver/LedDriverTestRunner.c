@@ -9,5 +9,6 @@ TEST_GROUP_RUNNER(LedDriver) {
   RUN_TEST_CASE(LedDriver, TurnAllOn);
   RUN_TEST_CASE(LedDriver, LedMemoryIsNotReadable);
   RUN_TEST_CASE(LedDriver, UpperAndLowerBounds);
-  RUN_TEST_CASE(LedDriver, OutOfBoundsChangesNothing);
+  RUN_TEST_CASE(LedDriver, OutOfBoundsTurnOnDoesNoHarm);
+  RUN_TEST_CASE(LedDriver, OutOfBoundsTurnOffDoesNoHarm);
 }
