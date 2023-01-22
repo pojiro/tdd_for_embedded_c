@@ -2,7 +2,8 @@ UNITY_FW_DIR=./unity.framework
 
 CFLAGS  += -I$(UNITY_FW_DIR)/extras/fixture/src \
            -I$(UNITY_FW_DIR)/extras/memory/src  \
-           -I$(UNITY_FW_DIR)/src
+           -I$(UNITY_FW_DIR)/src \
+           -I./include
 LDFLAGS += -L$(UNITY_FW_DIR)/build -lunity
 
 all: build_test
@@ -14,4 +15,5 @@ build_test:
   unity/AllTests.c \
   unity/LedDriver/LedDriverTest.c \
   unity/LedDriver/LedDriverTestRunner.c \
+  src/LedDriver.c \
   $(CFLAGS) $(LDFLAGS)
