@@ -1,0 +1,4 @@
+.fwatch.sh
+run_test
+run_test_cpputest
+*.o
