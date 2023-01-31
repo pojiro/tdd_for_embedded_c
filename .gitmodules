@@ -1,3 +1,6 @@
 [submodule "unity.framework"]
 	path = unity.framework
 	url = https://github.com/ThrowTheSwitch/Unity.git
+[submodule "cpputest.framework"]
+	path = cpputest.framework
+	url = https://github.com/cpputest/cpputest.git
