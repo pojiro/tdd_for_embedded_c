@@ -1,0 +1,21 @@
+CPPUTEST_FW_DIR=./cpputest.framework
+
+CFLAGS  += -I$(CPPUTEST_FW_DIR)/include -I./include
+LDFLAGS += -L$(CPPUTEST_FW_DIR)/build/lib -lCppUTest -lCppUTestExt
+
+all: build_test
+	./run_test_cpputest
+
+build_test: light_controller_spy
+	$(CXX) -o run_test_cpputest \
+  cpputest/AllTests.cpp \
+  cpputest/HomeAutomation/LightControllerSpyTest.cpp \
+  cpputest/HomeAutomation/LightControllerSpy.o \
+  $(CFLAGS) $(LDFLAGS)
+
+light_controller_spy:
+	$(CC) -o cpputest/HomeAutomation/LightControllerSpy.o\
+  -c cpputest/HomeAutomation/LightControllerSpy.c -I./include
+
+clean:
+	$(RM) cpputest/HomeAutomation/LightControllerSpy.o

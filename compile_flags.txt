@@ -1,6 +1,7 @@
 -I./unity.framework/extras/fixture/src
 -I./unity.framework/extras/memory/src
 -I./unity.framework/src
+-I./cpputest.framework/include
 -I./include
 -I./include/util
 -I./mocks
