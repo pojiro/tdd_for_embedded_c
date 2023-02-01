@@ -5,3 +5,4 @@ void LightScheduler_Destroy(void);
 
 void LightScheduler_Wakeup(void);
 void LightScheduler_ScheduleTurnOn(int, Day, int);
+void LightScheduler_ScheduleTurnOff(int, Day, int);
