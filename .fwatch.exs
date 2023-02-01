@@ -5,13 +5,13 @@ config :file_watch,
   dirs: ["."],
   # commands to be executed when detected, multiple commands can be specified
   commands: [
-    "make"
+    "make -f Makefile.cpputest"
   ],
   # if true, commands are executed in parallel
   parallel_exec: false,
   # path detecting patterns, should be written in regex
   # refs. https://hexdocs.pm/elixir/Regex.html
-  patterns: [~r".*\.c$"],
+  patterns: [~r".*\.(c|cpp)$"],
   # if your editor touches multiple files in a short period,
   # it can be avoided by increasing the debounce(msec)
   debounce: 100
@@ -19,7 +19,7 @@ config :file_watch,
 config :logger,
   # use :debug to show matched path and ran command
   #     :none  to suppress logs
-  level: :debug
+  level: :none
 
 # On Windows :file_system needs inotifywait.exe,
 # uncomment the following line and configure path to it
