@@ -8,9 +8,15 @@ typedef struct {
 } ScheduleLightEvent;
 
 enum { UNUSED = -1 };
-enum { TURN_ON, TURN_OFF };
+typedef enum { TURN_ON, TURN_OFF } Event;
 
 static ScheduleLightEvent scheduledEvent;
+
+static void scheduleEvent(int id, Day day, int minuteOfDay, Event event) {
+  scheduledEvent.id = id;
+  scheduledEvent.minuteOfDay = minuteOfDay;
+  scheduledEvent.event = event;
+}
 
 void LightScheduler_Create() { scheduledEvent.id = UNUSED; }
 void LightScheduler_Destroy() {}
@@ -31,13 +37,9 @@ void LightScheduler_Wakeup() {
 }
 
 void LightScheduler_ScheduleTurnOn(int id, Day day, int minuteOfDay) {
-  scheduledEvent.id = id;
-  scheduledEvent.minuteOfDay = minuteOfDay;
-  scheduledEvent.event = TURN_ON;
+  scheduleEvent(id, day, minuteOfDay, TURN_ON);
 }
 
 void LightScheduler_ScheduleTurnOff(int id, Day day, int minuteOfDay) {
-  scheduledEvent.id = id;
-  scheduledEvent.minuteOfDay = minuteOfDay;
-  scheduledEvent.event = TURN_OFF;
+  scheduleEvent(id, day, minuteOfDay, TURN_OFF);
 }
