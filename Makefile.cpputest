@@ -6,16 +6,30 @@ LDFLAGS += -L$(CPPUTEST_FW_DIR)/build/lib -lCppUTest -lCppUTestExt
 all: build_test
 	./run_test_cpputest
 
-build_test: light_controller_spy
+build_test: light_scheduler light_controller_spy fake_time_service
 	$(CXX) -o run_test_cpputest \
   cpputest/AllTests.cpp \
+  cpputest/HomeAutomation/LightSchedulerTest.cpp \
+  src/LightScheduler.o \
   cpputest/HomeAutomation/LightControllerSpyTest.cpp \
+  cpputest/HomeAutomation/FakeTimeServiceTest.cpp \
   cpputest/HomeAutomation/LightControllerSpy.o \
+  cpputest/HomeAutomation/FakeTimeService.o \
   $(CFLAGS) $(LDFLAGS)
 
+light_scheduler:
+	$(CC) -o src/LightScheduler.o \
+  -c src/LightScheduler.c -I./include
+
 light_controller_spy:
-	$(CC) -o cpputest/HomeAutomation/LightControllerSpy.o\
+	$(CC) -o cpputest/HomeAutomation/LightControllerSpy.o \
   -c cpputest/HomeAutomation/LightControllerSpy.c -I./include
 
+fake_time_service:
+	$(CC) -o cpputest/HomeAutomation/FakeTimeService.o \
+  -c cpputest/HomeAutomation/FakeTimeService.c -I./include
+
 clean:
+	$(RM) src/LightScheduler.o
 	$(RM) cpputest/HomeAutomation/LightControllerSpy.o
+	$(RM) cpputest/HomeAutomation/FakeTimeService.o
