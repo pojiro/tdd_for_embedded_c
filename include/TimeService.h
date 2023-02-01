@@ -1,3 +1,6 @@
+#ifndef __TIME_SERVICE_H__
+#define __TIME_SERVICE_H__
+
 typedef struct Time {
   int minuteOfDay;
   int dayOfWeek;
@@ -20,3 +23,5 @@ void TimeService_Create(void);
 void TimeService_Destroy(void);
 
 void TimeService_GetTime(Time *);
+
+#endif // __TIME_SERVICE_H__
