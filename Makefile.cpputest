@@ -17,8 +17,8 @@ TEST_RUNNER = run_test_cpputest
 all: $(TEST_RUNNER)
 	./$<
 
-$(TEST_RUNNER): $(C_OBJ)
-	$(CXX) -o $@ $(CXX_SRC) $^ $(CXXFLAGS) $(LDFLAGS)
+$(TEST_RUNNER): $(C_OBJ) $(CXX_SRC)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) -o $@ -c $^ $(CFLAGS)
