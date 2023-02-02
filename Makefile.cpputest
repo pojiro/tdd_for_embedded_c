@@ -1,35 +1,27 @@
 CPPUTEST_FW_DIR=./cpputest.framework
 
-CFLAGS  += -I$(CPPUTEST_FW_DIR)/include -I./include
+CFLAGS += -I./include
+
+CXXFLAGS  += -I$(CPPUTEST_FW_DIR)/include -I./include
 LDFLAGS += -L$(CPPUTEST_FW_DIR)/build/lib -lCppUTest -lCppUTestExt
 
-all: build_test
-	./run_test_cpputest
+CXX_SRC  = cpputest/AllTests.cpp
+CXX_SRC += $(wildcard cpputest/HomeAutomation/*.cpp)
 
-build_test: light_scheduler light_controller_spy fake_time_service
-	$(CXX) -o run_test_cpputest \
-  cpputest/AllTests.cpp \
-  cpputest/HomeAutomation/LightSchedulerTest.cpp \
-  src/LightScheduler.o \
-  cpputest/HomeAutomation/LightControllerSpyTest.cpp \
-  cpputest/HomeAutomation/FakeTimeServiceTest.cpp \
-  cpputest/HomeAutomation/LightControllerSpy.o \
-  cpputest/HomeAutomation/FakeTimeService.o \
-  $(CFLAGS) $(LDFLAGS)
+C_SRC  = src/LightScheduler.c
+C_SRC += $(wildcard cpputest/HomeAutomation/*.c)
+C_OBJ  = $(C_SRC:%.c=%.o)
 
-light_scheduler:
-	$(CC) -o src/LightScheduler.o \
-  -c src/LightScheduler.c -I./include
+TEST_RUNNER = run_test_cpputest
 
-light_controller_spy:
-	$(CC) -o cpputest/HomeAutomation/LightControllerSpy.o \
-  -c cpputest/HomeAutomation/LightControllerSpy.c -I./include
+all: $(TEST_RUNNER)
+	./$<
 
-fake_time_service:
-	$(CC) -o cpputest/HomeAutomation/FakeTimeService.o \
-  -c cpputest/HomeAutomation/FakeTimeService.c -I./include
+$(TEST_RUNNER): $(C_OBJ)
+	$(CXX) -o $@ $(CXX_SRC) $^ $(CXXFLAGS) $(LDFLAGS)
+
+%.o: %.c
+	$(CC) -o $@ -c $^ $(CFLAGS)
 
 clean:
-	$(RM) src/LightScheduler.o
-	$(RM) cpputest/HomeAutomation/LightControllerSpy.o
-	$(RM) cpputest/HomeAutomation/FakeTimeService.o
+	$(RM) $(C_OBJ)
