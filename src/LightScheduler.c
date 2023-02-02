@@ -3,6 +3,7 @@
 
 typedef struct {
   int id;
+  int day;
   int minuteOfDay;
   int event;
 } ScheduleLightEvent;
@@ -14,6 +15,7 @@ static ScheduleLightEvent scheduledEvent;
 
 static void scheduleEvent(int id, Day day, int minuteOfDay, Event event) {
   scheduledEvent.id = id;
+  scheduledEvent.day = day;
   scheduledEvent.minuteOfDay = minuteOfDay;
   scheduledEvent.event = event;
 }
@@ -27,6 +29,8 @@ static void operateLight(ScheduleLightEvent *lightEvent) {
 
 static void processEventDueNow(Time *time, ScheduleLightEvent *lightEvent) {
   if (lightEvent->id == UNUSED)
+    return;
+  if (lightEvent->day != EVERYDAY)
     return;
   if (time->minuteOfDay != lightEvent->minuteOfDay)
     return;
