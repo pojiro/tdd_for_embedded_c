@@ -1,4 +1,5 @@
 #include "FakeTimeService.h"
+#include <stddef.h>
 
 static Time faketime;
 static WakeupCallback callback;
@@ -20,6 +21,12 @@ void TimeService_SetPeriodicAlarmInSeconds(int seconds, WakeupCallback cb) {
   callback = cb;
 }
 
+void TimeService_CancelPeriodicAlarmInSeconds(int seconds, WakeupCallback cb) {
+  if (period == seconds && callback == cb) {
+    period = 0;
+    callback = NULL;
+  }
+}
 void FakeTimeService_SetMinute(int minute) { faketime.minuteOfDay = minute; }
 void FakeTimeService_SetDay(Day day) { faketime.dayOfWeek = day; }
 WakeupCallback FakeTimeService_GetAlarmCallback(void) { return callback; }

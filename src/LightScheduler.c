@@ -58,7 +58,9 @@ void LightScheduler_Create() {
 
   TimeService_SetPeriodicAlarmInSeconds(60, LightScheduler_Wakeup);
 }
-void LightScheduler_Destroy() {}
+void LightScheduler_Destroy() {
+  TimeService_CancelPeriodicAlarmInSeconds(60, LightScheduler_Wakeup);
+}
 
 void LightScheduler_Wakeup() {
   Time time;

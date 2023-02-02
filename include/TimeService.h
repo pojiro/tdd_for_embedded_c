@@ -27,5 +27,6 @@ void TimeService_Destroy(void);
 void TimeService_GetTime(Time *);
 
 void TimeService_SetPeriodicAlarmInSeconds(int, WakeupCallback);
+void TimeService_CancelPeriodicAlarmInSeconds(int, WakeupCallback);
 
 #endif // __TIME_SERVICE_H__
