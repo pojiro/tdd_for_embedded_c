@@ -17,6 +17,9 @@ typedef enum { TURN_ON, TURN_OFF } Event;
 static ScheduleLightEvent scheduledEvents[MAX_EVENTS];
 
 static int scheduleEvent(int id, Day dayOfWeek, int minuteOfDay, Event event) {
+  if (id < 0 || id >= MAX_LIGHTS)
+    return LS_ID_OUT_OF_BOUNDS;
+
   for (int i = 0; i < MAX_EVENTS; i++) {
     if (scheduledEvents[i].id == UNUSED) {
       scheduledEvents[i].id = id;
@@ -87,4 +90,14 @@ int LightScheduler_ScheduleTurnOn(int id, Day day, int minuteOfDay) {
 
 int LightScheduler_ScheduleTurnOff(int id, Day day, int minuteOfDay) {
   return scheduleEvent(id, day, minuteOfDay, TURN_OFF);
+}
+
+void LightScheduler_ScheduleRemove(int id, Day day, int minuteOfDay) {
+  for (int i = 0; i < MAX_EVENTS; i++) {
+    if (scheduledEvents[i].id == id && scheduledEvents[i].dayOfWeek == day &&
+        scheduledEvents[i].minuteOfDay == minuteOfDay) {
+      scheduledEvents[i].id = UNUSED;
+      return;
+    }
+  }
 }

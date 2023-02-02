@@ -1,7 +1,7 @@
 #include "LightControllerSpy.h"
 #include <stdbool.h>
 
-static int states[32];
+static int states[MAX_LIGHTS];
 static int lastId;
 static int lastState;
 
@@ -10,6 +10,8 @@ static bool isIdInRange(int id) { return id >= 0 && id < MAX_LIGHTS; }
 void LightController_Create(void) {
   lastId = LIGHT_ID_UNKNOWN;
   lastState = LIGHT_STATE_UNKNOWN;
+  for (int i = 0; i < MAX_LIGHTS; i++)
+    states[i] = LIGHT_STATE_UNKNOWN;
 }
 
 void LightController_Destroy(void) {}
