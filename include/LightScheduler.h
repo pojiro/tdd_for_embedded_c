@@ -9,3 +9,4 @@ void LightScheduler_Wakeup(void);
 int LightScheduler_ScheduleTurnOn(int, Day, int);
 int LightScheduler_ScheduleTurnOff(int, Day, int);
 void LightScheduler_ScheduleRemove(int, Day, int);
+void LightScheduler_Randomize(int, Day, int);

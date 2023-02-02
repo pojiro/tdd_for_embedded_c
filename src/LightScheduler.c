@@ -1,5 +1,6 @@
 #include "LightScheduler.h"
 #include "LightController.h"
+#include "RandomMinute.h"
 #include <stdbool.h>
 
 typedef struct {
@@ -97,6 +98,17 @@ void LightScheduler_ScheduleRemove(int id, Day day, int minuteOfDay) {
     if (scheduledEvents[i].id == id && scheduledEvents[i].dayOfWeek == day &&
         scheduledEvents[i].minuteOfDay == minuteOfDay) {
       scheduledEvents[i].id = UNUSED;
+      return;
+    }
+  }
+}
+
+void LightScheduler_Randomize(int id, Day day, int minuteOfDay) {
+
+  for (int i = 0; i < MAX_EVENTS; i++) {
+    if (scheduledEvents[i].id == id && scheduledEvents[i].dayOfWeek == day &&
+        scheduledEvents[i].minuteOfDay == minuteOfDay) {
+      scheduledEvents[i].minuteOfDay += RandomMinute_Get();
       return;
     }
   }
