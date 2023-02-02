@@ -101,6 +101,18 @@ TEST(LightScheduler, ScheduleWeekEndAndItsMonday) {
   checkLightState(LIGHT_ID_UNKNOWN, LIGHT_STATE_UNKNOWN);
 }
 
+TEST(LightScheduler, ScheduleTwoEventsAtTheSameTime) {
+  LightScheduler_ScheduleTurnOn(3, SUNDAY, 1200);
+  LightScheduler_ScheduleTurnOn(12, SUNDAY, 1200);
+
+  setTimeTo(SUNDAY, 1200);
+
+  LightScheduler_Wakeup();
+
+  checkLightState(3, LIGHT_ON);
+  checkLightState(12, LIGHT_ON);
+}
+
 TEST_GROUP(LightSchedulerInitAndCleanup){};
 
 TEST(LightSchedulerInitAndCleanup, CreateStartsOneMinuteAlarm) {

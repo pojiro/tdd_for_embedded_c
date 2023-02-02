@@ -10,15 +10,28 @@ typedef struct {
 } ScheduleLightEvent;
 
 enum { UNUSED = -1 };
+enum { MAX_EVENTS = 128 };
+
 typedef enum { TURN_ON, TURN_OFF } Event;
 
 static ScheduleLightEvent scheduledEvent;
+static ScheduleLightEvent scheduledEvents[MAX_EVENTS];
 
 static void scheduleEvent(int id, Day dayOfWeek, int minuteOfDay, Event event) {
   scheduledEvent.id = id;
   scheduledEvent.dayOfWeek = dayOfWeek;
   scheduledEvent.minuteOfDay = minuteOfDay;
   scheduledEvent.event = event;
+
+  for (int i = 0; i < MAX_EVENTS; i++) {
+    if (scheduledEvents[i].id == UNUSED) {
+      scheduledEvents[i].id = id;
+      scheduledEvents[i].dayOfWeek = dayOfWeek;
+      scheduledEvents[i].minuteOfDay = minuteOfDay;
+      scheduledEvents[i].event = event;
+      break;
+    }
+  }
 }
 
 static void operateLight(ScheduleLightEvent *lightEvent) {
@@ -50,11 +63,15 @@ static void processEventDueNow(Time *time, ScheduleLightEvent *lightEvent) {
     return;
   if (time->minuteOfDay != lightEvent->minuteOfDay)
     return;
-  operateLight(&scheduledEvent);
+  operateLight(lightEvent);
 }
 
 void LightScheduler_Create() {
   scheduledEvent.id = UNUSED;
+
+  for (int i = 0; i < MAX_EVENTS; i++) {
+    scheduledEvents[i].id = UNUSED;
+  }
 
   TimeService_SetPeriodicAlarmInSeconds(60, LightScheduler_Wakeup);
 }
@@ -67,6 +84,10 @@ void LightScheduler_Wakeup() {
   TimeService_GetTime(&time);
 
   processEventDueNow(&time, &scheduledEvent);
+
+  for (int i = 0; i < MAX_EVENTS; i++) {
+    processEventDueNow(&time, &scheduledEvents[i]);
+  }
 }
 
 void LightScheduler_ScheduleTurnOn(int id, Day day, int minuteOfDay) {
