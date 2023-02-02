@@ -1,9 +1,10 @@
 #include "LightScheduler.h"
 #include "LightController.h"
+#include <stdbool.h>
 
 typedef struct {
   int id;
-  int day;
+  int dayOfWeek;
   int minuteOfDay;
   int event;
 } ScheduleLightEvent;
@@ -13,9 +14,9 @@ typedef enum { TURN_ON, TURN_OFF } Event;
 
 static ScheduleLightEvent scheduledEvent;
 
-static void scheduleEvent(int id, Day day, int minuteOfDay, Event event) {
+static void scheduleEvent(int id, Day dayOfWeek, int minuteOfDay, Event event) {
   scheduledEvent.id = id;
-  scheduledEvent.day = day;
+  scheduledEvent.dayOfWeek = dayOfWeek;
   scheduledEvent.minuteOfDay = minuteOfDay;
   scheduledEvent.event = event;
 }
@@ -27,10 +28,25 @@ static void operateLight(ScheduleLightEvent *lightEvent) {
     LightController_Off(lightEvent->id);
 }
 
+static bool DoesLightRespondToday(Time *time, int reactionDay) {
+  int today = time->dayOfWeek;
+
+  if (reactionDay == EVERYDAY)
+    return true;
+  if (reactionDay == today)
+    return true;
+  if (reactionDay == WEEKEND && (today == SATURDAY || today == SUNDAY))
+    return true;
+  if (reactionDay == WEEKDAY && today >= MONDAY && today <= FRIDAY)
+    return true;
+
+  return false;
+}
+
 static void processEventDueNow(Time *time, ScheduleLightEvent *lightEvent) {
   if (lightEvent->id == UNUSED)
     return;
-  if (lightEvent->day != EVERYDAY)
+  if (!DoesLightRespondToday(time, lightEvent->dayOfWeek))
     return;
   if (time->minuteOfDay != lightEvent->minuteOfDay)
     return;
