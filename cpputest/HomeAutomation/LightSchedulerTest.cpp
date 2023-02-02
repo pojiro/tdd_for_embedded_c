@@ -23,8 +23,12 @@ TEST_GROUP(LightScheduler) {
   };
 
   void checkLightState(int id, int state) {
-    LONGS_EQUAL(id, LightControllerSpy_GetLastId());
-    LONGS_EQUAL(state, LightControllerSpy_GetLastState());
+    if (id == LIGHT_ID_UNKNOWN) {
+      LONGS_EQUAL(id, LightControllerSpy_GetLastId());
+      LONGS_EQUAL(state, LightControllerSpy_GetLastState());
+    } else {
+      LONGS_EQUAL(state, LightControllerSpy_GetLightState(id));
+    }
   }
 };
 

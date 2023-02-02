@@ -7,5 +7,6 @@ enum {
   LIGHT_ON = 1
 };
 
+int LightControllerSpy_GetLightState(int);
 int LightControllerSpy_GetLastId(void);
 int LightControllerSpy_GetLastState(void);
