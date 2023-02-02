@@ -8,7 +8,7 @@ LDFLAGS += -L$(CPPUTEST_FW_DIR)/build/lib -lCppUTest -lCppUTestExt
 CXX_SRC  = cpputest/AllTests.cpp
 CXX_SRC += $(wildcard cpputest/HomeAutomation/*.cpp)
 
-C_SRC  = src/LightScheduler.c
+C_SRC  = src/LightScheduler.c src/RandomMinute.c
 C_SRC += $(wildcard cpputest/HomeAutomation/*.c)
 C_OBJ  = $(C_SRC:%.c=%.o)
 
