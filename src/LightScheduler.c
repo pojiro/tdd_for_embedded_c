@@ -14,15 +14,9 @@ enum { MAX_EVENTS = 128 };
 
 typedef enum { TURN_ON, TURN_OFF } Event;
 
-static ScheduleLightEvent scheduledEvent;
 static ScheduleLightEvent scheduledEvents[MAX_EVENTS];
 
 static void scheduleEvent(int id, Day dayOfWeek, int minuteOfDay, Event event) {
-  scheduledEvent.id = id;
-  scheduledEvent.dayOfWeek = dayOfWeek;
-  scheduledEvent.minuteOfDay = minuteOfDay;
-  scheduledEvent.event = event;
-
   for (int i = 0; i < MAX_EVENTS; i++) {
     if (scheduledEvents[i].id == UNUSED) {
       scheduledEvents[i].id = id;
@@ -67,8 +61,6 @@ static void processEventDueNow(Time *time, ScheduleLightEvent *lightEvent) {
 }
 
 void LightScheduler_Create() {
-  scheduledEvent.id = UNUSED;
-
   for (int i = 0; i < MAX_EVENTS; i++) {
     scheduledEvents[i].id = UNUSED;
   }
@@ -82,8 +74,6 @@ void LightScheduler_Destroy() {
 void LightScheduler_Wakeup() {
   Time time;
   TimeService_GetTime(&time);
-
-  processEventDueNow(&time, &scheduledEvent);
 
   for (int i = 0; i < MAX_EVENTS; i++) {
     processEventDueNow(&time, &scheduledEvents[i]);
