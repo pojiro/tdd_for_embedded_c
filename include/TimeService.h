@@ -19,9 +19,13 @@ typedef enum Day {
   SATURDAY
 } Day;
 
+typedef void (*WakeupCallback)(void);
+
 void TimeService_Create(void);
 void TimeService_Destroy(void);
 
 void TimeService_GetTime(Time *);
+
+void TimeService_SetPeriodicAlarmInSeconds(int, WakeupCallback);
 
 #endif // __TIME_SERVICE_H__

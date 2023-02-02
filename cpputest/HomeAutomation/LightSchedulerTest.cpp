@@ -96,3 +96,14 @@ TEST(LightScheduler, ScheduleWeekEndAndItsMonday) {
   LightScheduler_Wakeup();
   checkLightState(LIGHT_ID_UNKNOWN, LIGHT_STATE_UNKNOWN);
 }
+
+TEST_GROUP(LightSchedulerInitAndCleanup){};
+
+TEST(LightSchedulerInitAndCleanup, CreateStartsOneMinuteAlarm) {
+  LightScheduler_Create();
+  POINTERS_EQUAL((void *)LightScheduler_Wakeup,
+                 (void *)FakeTimeService_GetAlarmCallback());
+
+  LONGS_EQUAL(60, FakeTimeService_GetAlarmPeriod());
+  LightScheduler_Destroy();
+}

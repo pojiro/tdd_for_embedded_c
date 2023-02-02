@@ -53,7 +53,11 @@ static void processEventDueNow(Time *time, ScheduleLightEvent *lightEvent) {
   operateLight(&scheduledEvent);
 }
 
-void LightScheduler_Create() { scheduledEvent.id = UNUSED; }
+void LightScheduler_Create() {
+  scheduledEvent.id = UNUSED;
+
+  TimeService_SetPeriodicAlarmInSeconds(60, LightScheduler_Wakeup);
+}
 void LightScheduler_Destroy() {}
 
 void LightScheduler_Wakeup() {
