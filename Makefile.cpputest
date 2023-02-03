@@ -14,6 +14,7 @@ C_OBJ  = $(C_SRC:%.c=%.o)
 
 TEST_RUNNER = run_test_cpputest
 
+.PHONY: all
 all: $(TEST_RUNNER)
 	./$<
 
@@ -23,5 +24,6 @@ $(TEST_RUNNER): $(C_OBJ) $(CXX_SRC)
 %.o: %.c
 	$(CC) -o $@ -c $^ $(CFLAGS)
 
+.PHONY: clean
 clean:
 	$(RM) $(C_OBJ)
