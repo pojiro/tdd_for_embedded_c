@@ -1,14 +1,16 @@
 CPPUTEST_FW_DIR=./cpputest.framework
 
-CFLAGS += -I./include
+CFLAGS += -I./include -I./include/util
 
-CXXFLAGS  += -I$(CPPUTEST_FW_DIR)/include -I./include
+CXXFLAGS  += -I$(CPPUTEST_FW_DIR)/include $(CFLAGS)
 LDFLAGS += -L$(CPPUTEST_FW_DIR)/build/lib -lCppUTest -lCppUTestExt
 
 CXX_SRC  = cpputest/AllTests.cpp
 CXX_SRC += $(wildcard cpputest/HomeAutomation/*.cpp)
+CXX_SRC += $(wildcard mocks/*.cpp)
 
-C_SRC  = src/LightScheduler.c src/RandomMinute.c
+C_SRC  = src/LightScheduler.c src/RandomMinute.c src/util/Utils.c
+C_SRC += mocks/FormatOutputSpy.c
 C_SRC += $(wildcard cpputest/HomeAutomation/*.c)
 C_OBJ  = $(C_SRC:%.c=%.o)
 
