@@ -11,7 +11,7 @@ config :file_watch,
   parallel_exec: false,
   # path detecting patterns, should be written in regex
   # refs. https://hexdocs.pm/elixir/Regex.html
-  patterns: [~r".*\.(c|cpp)$"],
+  patterns: [~r".*\.(c|cpp|h)$"],
   # if your editor touches multiple files in a short period,
   # it can be avoided by increasing the debounce(msec)
   debounce: 100
