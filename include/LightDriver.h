@@ -18,6 +18,8 @@ typedef struct LightDriverStruct {
 
 void LightDriver_SetInterface(LightDriverInterface);
 void LightDriver_TurnOn(LightDriver);
+void LightDriver_TurnOff(LightDriver);
+void LightDriver_Destroy(LightDriver);
 
 #include "LightDriverPrivate.h"
 
