@@ -6,7 +6,9 @@ CXXFLAGS  += -I$(CPPUTEST_FW_DIR)/include $(CFLAGS)
 LDFLAGS += -L$(CPPUTEST_FW_DIR)/build/lib -lCppUTest -lCppUTestExt
 
 CXX_SRC  = cpputest/AllTests.cpp
-CXX_SRC += cpputest/HomeAutomation/LightControllerTest.cpp mocks/LightDriverSpyTest.cpp
+CXX_SRC += cpputest/HomeAutomation/LightControllerTest.cpp \
+           mocks/LightDriverSpyTest.cpp \
+           cpputest/HomeAutomation/LightDriverTest.cpp
 
 C_SRC  = src/RandomMinute.c src/LightController.c src/LightDriver.c
 C_SRC += mocks/LightDriverSpy.c
