@@ -12,7 +12,7 @@ TEST_GROUP(LightDriverSpy) {
     lightDriverSpy = LightDriverSpy_Create(1);
     LightDriverSpy_InstallInterface();
   };
-  void teardown() { LightDriverSpy_Destroy(lightDriverSpy); };
+  void teardown() { LightDriver_Destroy(lightDriverSpy); };
 };
 
 TEST(LightDriverSpy, On) {

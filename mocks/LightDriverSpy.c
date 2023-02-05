@@ -7,8 +7,10 @@ typedef struct LightDriverSpyStruct {
 } LightDriverSpyStruct;
 
 static int states[MAX_LIGHTS];
-static LightDriverInterfaceStruct interface = {
-    LightDriverSpy_TurnOn, LightDriverSpy_TurnOff, LightDriverSpy_Destroy};
+static void turnOn(LightDriver);
+static void turnOff(LightDriver);
+static void destroy(LightDriver);
+static LightDriverInterfaceStruct interface = {turnOn, turnOff, destroy};
 
 void LightDriverSpy_Reset(void) {
   for (int i = 0; i < MAX_LIGHTS; i++) {
@@ -23,7 +25,7 @@ LightDriver LightDriverSpy_Create(int id) {
   return (LightDriver)self;
 }
 
-void LightDriverSpy_Destroy(LightDriver super) {
+static void destroy(LightDriver super) {
   if (super == NULL)
     return;
   LightDriverSpy self = (LightDriverSpy)super;
@@ -31,12 +33,12 @@ void LightDriverSpy_Destroy(LightDriver super) {
   free(self);
 }
 
-void LightDriverSpy_TurnOn(LightDriver super) {
+static void turnOn(LightDriver super) {
   LightDriverSpy self = (LightDriverSpy)super;
   states[self->base.id] = LIGHT_ON;
 }
 
-void LightDriverSpy_TurnOff(LightDriver super) {
+static void turnOff(LightDriver super) {
   LightDriverSpy self = (LightDriverSpy)super;
   states[self->base.id] = LIGHT_OFF;
 }

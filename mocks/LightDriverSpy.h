@@ -2,9 +2,6 @@
 #include "LightDriver.h"
 
 LightDriver LightDriverSpy_Create(int id);
-void LightDriverSpy_Destroy(LightDriver);
-void LightDriverSpy_TurnOn(LightDriver);
-void LightDriverSpy_TurnOff(LightDriver);
 
 void LightDriverSpy_Reset(void);
 int LightDriverSpy_GetState(int id);
