@@ -8,6 +8,12 @@ typedef struct LightDriverSpyStruct {
 
 static int states[MAX_LIGHTS];
 
+void LightDriverSpy_Reset(void) {
+  for (int i = 0; i < MAX_LIGHTS; i++) {
+    states[i] = LIGHT_STATE_UNKNOWN;
+  }
+}
+
 LightDriver LightDriverSpy_Create(int id) {
   LightDriverSpy self = malloc(sizeof(LightDriverSpyStruct));
   self->base.type = TestLightDriver;
@@ -16,6 +22,8 @@ LightDriver LightDriverSpy_Create(int id) {
 }
 
 void LightDriverSpy_Destroy(LightDriver super) {
+  if (super == NULL)
+    return;
   LightDriverSpy self = (LightDriverSpy)super;
   states[self->base.id] = LIGHT_STATE_UNKNOWN;
   free(self);
