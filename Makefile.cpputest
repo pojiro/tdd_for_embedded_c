@@ -10,7 +10,7 @@ CXX_SRC += cpputest/HomeAutomation/LightControllerTest.cpp \
            mocks/LightDriverSpyTest.cpp \
            cpputest/HomeAutomation/LightDriverTest.cpp
 
-C_SRC  = src/RandomMinute.c src/LightController.c src/LightDriver.c
+C_SRC  = src/RandomMinute.c src/LightController.c src/LightDriver.c mocks/CountingLightDriver.c
 C_SRC += mocks/LightDriverSpy.c
 C_OBJ  = $(C_SRC:%.c=%.o)
 

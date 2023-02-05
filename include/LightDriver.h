@@ -12,7 +12,7 @@ typedef enum LightDriverType {
 } LightDriverType;
 
 typedef struct LightDriverStruct {
-  LightDriverType type;
+  const char *type;
   int id;
 } LightDriverStruct;
 

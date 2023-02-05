@@ -11,7 +11,7 @@ static void shouldNotBeCalled(LightDriver self) { savedDriver = self; }
 LightDriverInterfaceStruct interface = {shouldNotBeCalled, shouldNotBeCalled,
                                         shouldNotBeCalled};
 
-LightDriverStruct testDriver = {TestLightDriver, 13};
+LightDriverStruct testDriver = {"TestLightDriver", 13};
 
 TEST_GROUP(LightDriver){};
 
