@@ -11,6 +11,7 @@ int LightDriverSpy_GetState(int id);
 int LightDriverSpy_GetLastId(void);
 int LightDriverSpy_GetLastState(void);
 void LightDriverSpy_AddSpiesToController(void);
+void LightDriverSpy_InstallInterface(void);
 
 enum {
   LIGHT_ID_UNKNOWN = -1,

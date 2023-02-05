@@ -10,13 +10,12 @@ TEST_GROUP(LightDriverSpy) {
   void setup() {
     LightDriverSpy_Reset();
     lightDriverSpy = LightDriverSpy_Create(1);
-    // LightDriverSpy_InstallInterface();
+    LightDriverSpy_InstallInterface();
   };
   void teardown() { LightDriverSpy_Destroy(lightDriverSpy); };
 };
 
 TEST(LightDriverSpy, On) {
-  // LightDriver_TurnOn(lightDriverSpy);
-  LightDriverSpy_TurnOn(lightDriverSpy);
+  LightDriver_TurnOn(lightDriverSpy);
   LONGS_EQUAL(LIGHT_ON, LightDriverSpy_GetState(1));
 }

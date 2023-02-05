@@ -7,6 +7,7 @@ typedef struct LightDriverSpyStruct {
 } LightDriverSpyStruct;
 
 static int states[MAX_LIGHTS];
+static LightDriverInterfaceStruct interface = {LightDriverSpy_TurnOn};
 
 void LightDriverSpy_Reset(void) {
   for (int i = 0; i < MAX_LIGHTS; i++) {
@@ -41,4 +42,8 @@ void LightDriverSpy_AddSpiesToController(void) {
     LightDriver driver = LightDriverSpy_Create(i);
     LightController_Add(i, driver);
   }
+}
+
+void LightDriverSpy_InstallInterface(void) {
+  LightDriver_SetInterface(&interface);
 }
