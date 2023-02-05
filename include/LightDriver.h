@@ -4,18 +4,6 @@
 typedef struct LightDriverStruct *LightDriver;
 typedef struct LightDriverInterfaceStruct *LightDriverInterface;
 
-typedef enum LightDriverType {
-  TestLightDriver,
-  X10,
-  AcmeWireless,
-  MemoryMapped
-} LightDriverType;
-
-typedef struct LightDriverStruct {
-  const char *type;
-  int id;
-} LightDriverStruct;
-
 void LightDriver_SetInterface(LightDriverInterface);
 void LightDriver_TurnOn(LightDriver);
 void LightDriver_TurnOff(LightDriver);

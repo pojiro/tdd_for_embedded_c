@@ -9,13 +9,13 @@ static bool isValid(LightDriver self) { return interface && self; }
 void LightDriver_SetInterface(LightDriverInterface i) { interface = i; }
 void LightDriver_TurnOn(LightDriver self) {
   if (isValid(self))
-    interface->TurnOn(self);
+    self->vtable->TurnOn(self);
 }
 void LightDriver_TurnOff(LightDriver self) {
   if (isValid(self))
-    interface->TurnOff(self);
+    self->vtable->TurnOff(self);
 }
 void LightDriver_Destroy(LightDriver self) {
   if (isValid(self))
-    interface->Destroy(self);
+    self->vtable->Destroy(self);
 }

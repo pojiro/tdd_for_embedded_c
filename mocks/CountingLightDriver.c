@@ -8,13 +8,24 @@ typedef struct CountingLightDriverStruct {
   int counter;
 } CountingLightDriverStruct;
 
+static void count(LightDriver base);
+static void destroy(LightDriver base);
+
+static LightDriverInterfaceStruct interface = {count, count, destroy};
+
 static void count(LightDriver base) {
   CountingLightDriver self = (CountingLightDriver)base;
   self->counter++;
 }
 
+static void destroy(LightDriver base) {
+  CountingLightDriver self = (CountingLightDriver)base;
+  free(self);
+}
+
 LightDriver CountingLightDriver_Create(int id) {
   CountingLightDriver self = malloc(sizeof(CountingLightDriverStruct));
+  self->base.vtable = &interface;
   self->base.type = "CountingLightDriver";
   self->base.id = id;
   return (LightDriver)self;

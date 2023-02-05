@@ -20,6 +20,7 @@ void LightDriverSpy_Reset(void) {
 
 LightDriver LightDriverSpy_Create(int id) {
   LightDriverSpy self = malloc(sizeof(LightDriverSpyStruct));
+  self->base.vtable = &interface;
   self->base.type = "TestLightDriver";
   self->base.id = id;
   return (LightDriver)self;
