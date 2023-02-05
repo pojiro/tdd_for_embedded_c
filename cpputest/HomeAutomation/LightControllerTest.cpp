@@ -11,6 +11,8 @@ TEST_GROUP(LightController) {
     LightController_Create();
     // ライト ID 毎にスパイを投入する
     LightDriverSpy_AddSpiesToController();
+    LightDriverSpy_InstallInterface();
+    LightDriverSpy_Reset();
   }
   void teardown() { LightController_Destroy(); }
 };
